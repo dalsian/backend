@@ -111,7 +111,8 @@ public class BeanUtil {
 		return spDto;
 	}
 	
-//	public static Movie toMovie(edu.mum.cinema.dto.Movie) {
-//		Movie movie = new Movie();
-//	}
+	public static Movie toMovie() {
+		Movie movie = new Movie();
+		return null;
+	}
 }
