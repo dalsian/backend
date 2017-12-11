@@ -31,7 +31,7 @@ public class Movie {
 	public Movie() {
 	}
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "movieId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Column(nullable = true)
 	private List<Schedule> scheduleList;
 	
