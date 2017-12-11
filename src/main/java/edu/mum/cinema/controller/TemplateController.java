@@ -1,5 +1,6 @@
 package edu.mum.cinema.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import edu.mum.cinema.model.template.LayoutTemplate;
 import edu.mum.cinema.model.template.SeatTemplate;
 import edu.mum.cinema.model.template.SectionTemplate;
 import edu.mum.cinema.service.template.ITemplateService;
+import edu.mum.cinema.util.BeanUtil;
 
 @RestController
 public class TemplateController {
@@ -29,6 +31,16 @@ public class TemplateController {
 	public ResponseEntity<List<LayoutTemplate>> getAllLayoutTemplate() {
 		List<LayoutTemplate> templateList = templateService.getAllLayoutTemplate();
 		return ResponseEntity.ok().body(templateList);
+	}
+	
+	@GetMapping("/sectiontemplatebylayoutid/{id}")
+	public ResponseEntity<List<edu.mum.cinema.dto.SectionTemplate>> getsectionTemplateByLayoutId(@PathVariable("id") long id) {
+		LayoutTemplate layoutTemplate = templateService.getLayoutTemplate(id);
+		List<edu.mum.cinema.dto.SectionTemplate> sectionList = new ArrayList<>();
+		for(SectionTemplate template : layoutTemplate.getSectionTemplateList()) {
+			sectionList.add(BeanUtil.toSectionTemplateDto(template));
+		}
+		return ResponseEntity.ok().body(sectionList);
 	}
 	
 	@GetMapping("/sectiontemplate/{id}")

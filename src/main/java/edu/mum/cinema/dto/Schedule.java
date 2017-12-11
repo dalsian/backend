@@ -8,9 +8,9 @@ public class Schedule {
 	private String date;
 	private String time;
 	private String movieId;
-	private String movieName;
-	private String layoutId;
-	private String layoutName;
+	private String movieTitle;
+	private String templateId;
+	private String templateName;
     private List<SectionPrice> sectionPrices;
 	private List<Seat> seatList;
 	
@@ -50,23 +50,23 @@ public class Schedule {
 	public void setMovieId(String movieId) {
 		this.movieId = movieId;
 	}
-	public String getMovieName() {
-		return movieName;
+	public String getMovieTitle() {
+		return movieTitle;
 	}
-	public void setMovieName(String movieName) {
-		this.movieName = movieName;
+	public void setMovieTitle(String movieName) {
+		this.movieTitle = movieName;
 	}
-	public String getLayoutId() {
-		return layoutId;
+	public String getTemplateId() {
+		return templateId;
 	}
-	public void setLayoutId(String layoutId) {
-		this.layoutId = layoutId;
+	public void setTemplateId(String layoutId) {
+		this.templateId = layoutId;
 	}
-	public String getLayoutName() {
-		return layoutName;
+	public String getTemplateName() {
+		return templateName;
 	}
-	public void setLayoutName(String layoutName) {
-		this.layoutName = layoutName;
+	public void setTemplateName(String layoutName) {
+		this.templateName = layoutName;
 	}
 	
 	

@@ -43,7 +43,7 @@ public class ScheduleDao implements IScheduleDao {
 	public void update(Long id, Schedule t) {
 		Session session = sessionFactory.getCurrentSession();
 		Schedule existing = session.byId(Schedule.class).load(id);
-		existing.setMovie(t.getMovie());
+		existing.setMovieId(t.getMovieId());
 		existing.setDatetime(t.getDatetime());
 		session.update(existing);
 	}

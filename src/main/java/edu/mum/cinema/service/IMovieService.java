@@ -1,5 +1,6 @@
 package edu.mum.cinema.service;
 
+import java.util.Date;
 import java.util.List;
 
 import edu.mum.cinema.model.Movie;

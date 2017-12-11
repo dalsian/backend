@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.mum.cinema.model.Schedule;
+import edu.mum.cinema.service.IMovieService;
 import edu.mum.cinema.service.IScheduleService;
 import edu.mum.cinema.util.BeanUtil;
 
@@ -22,6 +23,9 @@ public class ScheduleController {
 	
 	@Autowired
 	private IScheduleService scheduleService;
+	
+	@Autowired
+	private IMovieService movieService;
 	
 	@PostMapping("/schedule")
 	public ResponseEntity<?> save(@RequestBody edu.mum.cinema.dto.Schedule scheduleDto) {
@@ -44,6 +48,7 @@ public class ScheduleController {
 		
 		for(Schedule schedule : scheduleService.getAll()) {
 			edu.mum.cinema.dto.Schedule scheduleDto = BeanUtil.toScheduleDto(schedule);
+			scheduleDto.setMovieTitle(movieService.get(schedule.getMovieId()).getName());
 			scheduleDtoList.add(scheduleDto);
 		}
 		

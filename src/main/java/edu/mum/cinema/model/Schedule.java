@@ -14,10 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import edu.mum.cinema.model.template.LayoutTemplate;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity(name = "schedule")
 public class Schedule {
 
@@ -26,8 +29,8 @@ public class Schedule {
 	private Long id;
 	private Date datetime;
 	
-	@ManyToOne
-	private Movie movie;
+	@Column(name = "movie_id")
+	private Long movieId;
 	
 	@ManyToOne
 	@JoinColumn(name = "layout_template_id")
@@ -54,12 +57,15 @@ public class Schedule {
 	public void setDatetime(Date datetime) {
 		this.datetime = datetime;
 	}
-	public Movie getMovie() {
-		return movie;
+	
+	public Long getMovieId() {
+		return movieId;
 	}
-	public void setMovie(Movie movie) {
-		this.movie = movie;
+
+	public void setMovieId(Long movieId) {
+		this.movieId = movieId;
 	}
+
 	public LayoutTemplate getLayoutTemplate() {
 		return layoutTemplate;
 	}

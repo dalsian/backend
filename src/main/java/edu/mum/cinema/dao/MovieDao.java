@@ -1,9 +1,11 @@
 package edu.mum.cinema.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.mum.cinema.model.Movie;
+import edu.mum.cinema.model.User;
 
 @Repository
 public class MovieDao implements IMovieDao {

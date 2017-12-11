@@ -54,4 +54,15 @@ public class MovieController {
 		movieService.delete(id);
 		return ResponseEntity.ok().body("Movie deleted");
 	}
+	
+	@GetMapping("/moviewithschedule/{date}")
+	public ResponseEntity<List<edu.mum.cinema.dto.Movie>> get(@PathVariable("date") String date) {
+		
+		List<edu.mum.cinema.dto.Movie> movieDtoList = new ArrayList<>();
+		for(Movie movie : movieService.getAll()) {
+			movieDtoList.add(BeanUtil.toMovieDto(movie));
+			//TODO filter by date
+		}
+		return ResponseEntity.ok().body(movieDtoList);
+	}
 }

@@ -10,6 +10,7 @@ import edu.mum.cinema.model.Schedule;
 import edu.mum.cinema.model.SeatOccupancy;
 import edu.mum.cinema.model.SectionPrice;
 import edu.mum.cinema.model.User;
+import edu.mum.cinema.model.template.SectionTemplate;
 
 public class BeanUtil {
 	
@@ -75,15 +76,15 @@ public class BeanUtil {
 	public static edu.mum.cinema.dto.Schedule toScheduleDto(Schedule schedule) {
 		
 		edu.mum.cinema.dto.Schedule scheduleDto = new edu.mum.cinema.dto.Schedule();
-		if(scheduleDto.getId() != null) {
+		if(schedule.getId() != null) {
 			scheduleDto.setId(schedule.getId().toString());
 		}
 		scheduleDto.setDate(DateUtil.getDate(schedule.getDatetime()));
 		scheduleDto.setTime(DateUtil.getTime(schedule.getDatetime()));
-		scheduleDto.setMovieId(schedule.getMovie().getId().toString());
-		scheduleDto.setMovieName(schedule.getMovie().getName());
-		scheduleDto.setLayoutId(schedule.getLayoutTemplate().getId().toString());
-		scheduleDto.setLayoutName(schedule.getLayoutTemplate().getName());
+		scheduleDto.setMovieId(schedule.getMovieId().toString());
+//		scheduleDto.setMovieName(schedule.getMovie().getName());
+		scheduleDto.setTemplateId(schedule.getLayoutTemplate().getId().toString());
+		scheduleDto.setTemplateName(schedule.getLayoutTemplate().getName());
 		List<edu.mum.cinema.dto.SectionPrice> spDtos = new ArrayList<>();
 		for (SectionPrice sectionPrice : schedule.getSectionPriceList()) {
 			spDtos.add(BeanUtil.toSectionPriceDto(sectionPrice));
@@ -97,7 +98,7 @@ public class BeanUtil {
 	public static Schedule toSchedule(edu.mum.cinema.dto.Schedule scheduleDto) {
 		
 		Schedule schedule = new Schedule();
-		if (scheduleDto.getId() != null) {
+		if (scheduleDto.getId() != null && !scheduleDto.getId().isEmpty()) {
 			schedule.setId(Long.parseLong(scheduleDto.getId()));
 		}
 		schedule.setDatetime(DateUtil.toDate(scheduleDto.getDate()+" "+scheduleDto.getTime()));
@@ -119,7 +120,7 @@ public class BeanUtil {
 	
 	public static Movie toMovie(edu.mum.cinema.dto.Movie movieDto) {
 		Movie movie = new Movie();
-		if (movieDto.getId() != null) {
+		if (movieDto.getId() != null && !movieDto.getId().isEmpty()) {
 			movie.setId(Long.parseLong(movieDto.getId()));
 		}
 		movie.setName(movieDto.getTitle());
@@ -148,5 +149,14 @@ public class BeanUtil {
 		movieDto.setSchedules(scheduleDtoList);
 		
 		return movieDto;
+	}
+	
+	public static edu.mum.cinema.dto.SectionTemplate toSectionTemplateDto(SectionTemplate template) {
+		edu.mum.cinema.dto.SectionTemplate templateDto = new edu.mum.cinema.dto.SectionTemplate();
+		templateDto.setId(template.getId().toString());
+		templateDto.setSectionLabel(template.getSectionLabel());
+		templateDto.setLayoutTemplateId(template.getLayoutTemplate().getId().toString());
+	
+		return templateDto;
 	}
 }
