@@ -1,0 +1,9 @@
+edu\mum\cinema\config\AppConfig.class
+edu\mum\cinema\dao\UserDao.class
+edu\mum\cinema\service\UserService.class
+edu\mum\cinema\controller\UserController.class
+edu\mum\cinema\model\User.class
+edu\mum\cinema\config\WebConfig.class
+edu\mum\cinema\dao\IUserDao.class
+edu\mum\cinema\service\IUserService.class
+edu\mum\cinema\config\MyWebAppInitializer.class
