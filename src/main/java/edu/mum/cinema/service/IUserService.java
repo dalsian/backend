@@ -10,4 +10,5 @@ public interface IUserService {
 	List<User> getAll();
 	void update(long id, User user);
 	void delete(long id);
+	User authenticate(String userName, String password);
 }

@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StringUtil {
 	
@@ -51,6 +53,16 @@ public class StringUtil {
 		}
 		
 		return thedigest.toString();
+	}
+	
+	public static Map<String, String> paramsToMap(String params) {
+		Map<String,String> paramMap = new HashMap<>();
+		
+		for(String param : params.split("&")) {
+			String[] keyval = param.split("=");
+			paramMap.put(keyval[0], keyval[1]);
+		}
+		return paramMap;
 	}
 	
 	public static void main(String[] args) {

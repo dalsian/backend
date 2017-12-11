@@ -1,5 +1,6 @@
 package edu.mum.cinema.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.mum.cinema.model.Movie;
 import edu.mum.cinema.service.IMovieService;
+import edu.mum.cinema.util.BeanUtil;
 @RestController
 public class MovieController {
 	
@@ -21,26 +23,29 @@ public class MovieController {
 	private IMovieService movieService;
 	
 	@PostMapping("/movie")
-	public ResponseEntity<?> save(@RequestBody Movie movie) {
-		long id = movieService.save(movie);
+	public ResponseEntity<?> save(@RequestBody edu.mum.cinema.dto.Movie movieDto) {
+		long id = movieService.save(BeanUtil.toMovie(movieDto));
 		return ResponseEntity.ok().body("Movie id " + id + " has been saved.");
 	}
 	
 	@GetMapping("/movie/{id}")
-	public ResponseEntity<Movie> get(@PathVariable("id") long id) {
-		Movie movie = movieService.get(id);
-		return ResponseEntity.ok().body(movie);
+	public ResponseEntity<edu.mum.cinema.dto.Movie> get(@PathVariable("id") long id) {
+		edu.mum.cinema.dto.Movie movieDto = BeanUtil.toMovieDto(movieService.get(id));
+		return ResponseEntity.ok().body(movieDto);
 	}
 	
 	@GetMapping("/movie")
-	public ResponseEntity<List<Movie>> getAll() {
-		List<Movie> movieList = movieService.getAll();
-		return ResponseEntity.ok().body(movieList);
+	public ResponseEntity<List<edu.mum.cinema.dto.Movie>> getAll() {
+		List<edu.mum.cinema.dto.Movie> movieDtoList = new ArrayList<>();
+		for(Movie movie : movieService.getAll()) {
+			movieDtoList.add(BeanUtil.toMovieDto(movie));
+		}
+		return ResponseEntity.ok().body(movieDtoList);
 	}
 	
 	@PutMapping("/movie/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Movie movie) {
-		movieService.update(id, movie);
+	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody edu.mum.cinema.dto.Movie movieDto) {
+		movieService.update(id, BeanUtil.toMovie(movieDto));
 		return ResponseEntity.ok().body("Movie has been updated successfully.");
 	}
 	

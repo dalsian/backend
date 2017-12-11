@@ -10,4 +10,5 @@ public interface IUserDao {
 	List<User> getAll();
 	void update(Long id, User user);
 	void delete(Long id);
+	User authenticate(String userName, String password);
 }

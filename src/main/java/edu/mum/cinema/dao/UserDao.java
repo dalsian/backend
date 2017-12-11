@@ -2,8 +2,10 @@ package edu.mum.cinema.dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -12,6 +14,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.mum.cinema.model.SeatOccupancy;
 import edu.mum.cinema.model.User;
 
 @Repository
@@ -60,6 +63,33 @@ public class UserDao implements IUserDao {
 		Session session = sessionFactory.getCurrentSession();
 		User user = session.byId(User.class).load(id);
 		session.delete(user);
+	}
+
+	@Override
+	public User authenticate(String userName, String password) {
+		Session session = sessionFactory.getCurrentSession();
+	
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<User> cq = cb.createQuery(User.class);
+		
+		Root<User> root = cq.from(User.class);
+		
+		Predicate p = cb.conjunction();
+		p = cb.and(cb.equal(root.get("userId"), userName), 
+					cb.equal(root.get("password"), password));
+        cq.select(root);
+        cq.where(p);
+								
+//		cq.select(root).where(cb.equal(root.get("userId"), userName),
+//								cb.equal(root.get("password"), password));
+		Query<User> query = session.createQuery(cq);
+		User user = null;
+		try {
+			user  = (query.getResultList() != null && query.getResultList().size() > 0) ? query.getResultList().get(0) : null;
+		} catch(NoResultException e) {
+			
+		}
+		return user;
 	}
 	
 }

@@ -44,4 +44,10 @@ public class UserService implements IUserService {
 		userDao.delete(id);
 	}
 
+	@Override
+	public User authenticate(String userName, String password) {
+		
+		return userDao.authenticate(userName, password);
+	}
+
 }

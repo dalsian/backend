@@ -75,7 +75,9 @@ public class BeanUtil {
 	public static edu.mum.cinema.dto.Schedule toScheduleDto(Schedule schedule) {
 		
 		edu.mum.cinema.dto.Schedule scheduleDto = new edu.mum.cinema.dto.Schedule();
-		scheduleDto.setId(schedule.getId().toString());
+		if(scheduleDto.getId() != null) {
+			scheduleDto.setId(schedule.getId().toString());
+		}
 		scheduleDto.setDate(DateUtil.getDate(schedule.getDatetime()));
 		scheduleDto.setTime(DateUtil.getTime(schedule.getDatetime()));
 		scheduleDto.setMovieId(schedule.getMovie().getId().toString());
@@ -95,7 +97,9 @@ public class BeanUtil {
 	public static Schedule toSchedule(edu.mum.cinema.dto.Schedule scheduleDto) {
 		
 		Schedule schedule = new Schedule();
-		schedule.setId(Long.parseLong(scheduleDto.getId()));
+		if (scheduleDto.getId() != null) {
+			schedule.setId(Long.parseLong(scheduleDto.getId()));
+		}
 		schedule.setDatetime(DateUtil.toDate(scheduleDto.getDate()+" "+scheduleDto.getTime()));
 		//schedule.setMovie(scheduleDto.getMovie()); only title
 		//layouttemplate
@@ -113,8 +117,36 @@ public class BeanUtil {
 		return spDto;
 	}
 	
-	public static Movie toMovie() {
+	public static Movie toMovie(edu.mum.cinema.dto.Movie movieDto) {
 		Movie movie = new Movie();
-		return null;
+		if (movieDto.getId() != null) {
+			movie.setId(Long.parseLong(movieDto.getId()));
+		}
+		movie.setName(movieDto.getTitle());
+		movie.setDescription(movieDto.getDescription());
+		movie.setGenre(movieDto.getGenre());
+		movie.setImageurl(movieDto.getImageUrl());
+		movie.setLength(Integer.parseInt(movieDto.getDuration()));
+		
+		
+		return movie;
+	}
+	
+	public static edu.mum.cinema.dto.Movie toMovieDto(Movie movie) {
+		edu.mum.cinema.dto.Movie movieDto = new edu.mum.cinema.dto.Movie();
+		movieDto.setId(movie.getId().toString());
+		movieDto.setTitle(movie.getName());
+		movieDto.setDescription(movie.getDescription());
+		movieDto.setDuration(Integer.toString(movie.getLength()));
+		movieDto.setGenre(movie.getGenre());
+		movieDto.setImageUrl(movie.getImageurl());
+		
+		List<edu.mum.cinema.dto.Schedule> scheduleDtoList = new ArrayList<>();
+		for(Schedule schedule : movie.getScheduleList()) {
+			scheduleDtoList.add(toScheduleDto(schedule));
+		}
+		movieDto.setSchedules(scheduleDtoList);
+		
+		return movieDto;
 	}
 }
