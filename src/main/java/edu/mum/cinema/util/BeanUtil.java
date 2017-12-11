@@ -59,11 +59,13 @@ public class BeanUtil {
 	public static User toUser(edu.mum.cinema.dto.User userDto) {
 		
 		User user = new User();
-		user.setId(Long.parseLong(userDto.getId()));
+		if(userDto.getId() != null) {
+			user.setId(Long.parseLong(userDto.getId()));
+		}
 		user.setFirstName(userDto.getFirstName());
 		user.setLastName(userDto.getLastName());
 		user.setEmail(userDto.getEmail());
-		user.setRoleType(Integer.parseInt(userDto.getRoleType()));
+		user.setRoleType(userDto.getRoleType() != null ? Integer.parseInt(userDto.getRoleType()) : 1);
 		user.setUserId(userDto.getUsername());
 		user.setPassword(userDto.getPassword());
 		
