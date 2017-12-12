@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.mum.cinema.model.Schedule;
+import edu.mum.cinema.model.SeatOccupancy;
+import edu.mum.cinema.model.SectionPrice;
 import edu.mum.cinema.service.IMovieService;
 import edu.mum.cinema.service.IScheduleService;
 import edu.mum.cinema.util.BeanUtil;
@@ -26,6 +28,15 @@ public class ScheduleController {
 	
 	@Autowired
 	private IMovieService movieService;
+	
+	@GetMapping("/seatsByScheduleId/{sid}")
+	public ResponseEntity<List<edu.mum.cinema.dto.Seat>> getSeatOccupancyByScheduleId(@PathVariable("sid") long sid) {
+
+		Schedule schedule = scheduleService.get(sid);
+		List<edu.mum.cinema.dto.Seat> seatDtos = BeanUtil.toSeatDtoList(schedule.getSectionPriceList());
+		
+		return ResponseEntity.ok().body(seatDtos);
+	}
 	
 	@PostMapping("/schedule")
 	public ResponseEntity<?> save(@RequestBody edu.mum.cinema.dto.Schedule scheduleDto) {

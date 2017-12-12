@@ -37,9 +37,13 @@ public class TemplateController {
 	public ResponseEntity<List<edu.mum.cinema.dto.SectionTemplate>> getsectionTemplateByLayoutId(@PathVariable("id") long id) {
 		LayoutTemplate layoutTemplate = templateService.getLayoutTemplate(id);
 		List<edu.mum.cinema.dto.SectionTemplate> sectionList = new ArrayList<>();
-		for(SectionTemplate template : layoutTemplate.getSectionTemplateList()) {
-			sectionList.add(BeanUtil.toSectionTemplateDto(template));
+		
+		if (layoutTemplate.getSectionTemplateList() != null) {
+			for(SectionTemplate template : layoutTemplate.getSectionTemplateList()) {
+				sectionList.add(BeanUtil.toSectionTemplateDto(template));
+			}
 		}
+		
 		return ResponseEntity.ok().body(sectionList);
 	}
 	

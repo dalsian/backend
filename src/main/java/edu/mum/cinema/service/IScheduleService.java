@@ -3,6 +3,7 @@ package edu.mum.cinema.service;
 import java.util.List;
 
 import edu.mum.cinema.model.Schedule;
+import edu.mum.cinema.model.SeatOccupancy;
 
 public interface IScheduleService {
 	
@@ -20,4 +21,5 @@ public interface IScheduleService {
 	List<Schedule> getSchedulesByMovieId(Long movieId);
 	void update(long id, Schedule schedule);
 	void delete(long id);
+	List<SeatOccupancy> getSeatOccupanciesBySchedule(long id);
 }

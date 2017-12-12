@@ -17,9 +17,9 @@ import edu.mum.cinema.model.template.SeatTemplate;
 @Entity(name = "seat_occupancy")
 public class SeatOccupancy {
 	
-	public static final String STATUS_FREE = "free";
-	public static final String STATUS_SOLD = "sold";
-	public static final String STATUS_SELECTED = "selected";
+    public final static String STATUS_FREE = "0";
+    public final static String STATUS_SOLD = "1";
+    public final static String STATUS_SELECTED = "2";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

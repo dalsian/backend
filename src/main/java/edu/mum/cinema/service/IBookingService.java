@@ -28,5 +28,7 @@ public interface IBookingService {
 	List<SeatOccupancy> getSeatOccupanciesBySectionPrice(Long sectionPriceId);
 	
 	SeatOccupancy getSeatOccupancy(Long id);
+
+	
 	
 }

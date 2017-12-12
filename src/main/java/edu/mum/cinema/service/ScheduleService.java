@@ -1,5 +1,6 @@
 package edu.mum.cinema.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,6 +88,17 @@ public class ScheduleService implements IScheduleService {
 	public List<Schedule> getSchedulesByMovieId(Long movieId) {
 		return scheduleDao.getByMovieId(movieId);
 	}
-
+	
+	@Override
+	public List<SeatOccupancy> getSeatOccupanciesBySchedule(long id) {
+		List<SeatOccupancy> seatOccupancyList = new ArrayList<>();
+		Schedule schedule = scheduleDao.get(id);
+		for (SectionPrice sp : schedule.getSectionPriceList()) {
+			for (SeatOccupancy so : sp.getSeatOccupancySet()) {
+				seatOccupancyList.add(so);
+			}
+		}
+		return seatOccupancyList;
+	}
 
 }

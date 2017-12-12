@@ -1,5 +1,6 @@
 package edu.mum.cinema.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class BookingController {
 	
 	@Autowired
 	private IBookingService bookingService;
+	
 	
 	@GetMapping("/seatoccupancybysectionprice/{id}")
 	public ResponseEntity<List<SeatOccupancy>> getSeatOccupancyBySectionPriceId(@PathVariable("id") long id) {
