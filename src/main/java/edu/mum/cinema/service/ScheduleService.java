@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.cinema.dao.IScheduleDao;
+import edu.mum.cinema.dao.ISeatOccupancyDao;
+import edu.mum.cinema.dao.ISectionPriceDao;
 import edu.mum.cinema.model.Schedule;
 import edu.mum.cinema.model.SeatOccupancy;
 import edu.mum.cinema.model.SectionPrice;
@@ -23,14 +25,18 @@ public class ScheduleService implements IScheduleService {
 	@Autowired
 	private IScheduleDao scheduleDao;
 	
+	@Autowired
+	private ISectionPriceDao sectionPriceDao;
+	
+	@Autowired
+	private ISeatOccupancyDao seatOccupancyDao;
+	
 	/**
-	 * Create a new schedule.  
+	 * Create a new schedule. 
 	 */
 	@Transactional
 	@Override
 	public long save(Schedule schedule) {
-		
-		createSeatOccupancies(schedule);
 		
 		Long scheduleId = scheduleDao.save(schedule);
 		
@@ -54,11 +60,13 @@ public class ScheduleService implements IScheduleService {
 				seatOccupancy.setStatus(SeatOccupancy.STATUS_FREE);
 				seatOccupancy.setSectionPriceId(sectionPrice.getId());
 				seatOccupancy.setSeatTemplate(seatTemplate);
+				seatOccupancyDao.save(seatOccupancy);
 				
 				seatOccupancySet.add(seatOccupancy);
 			}
 			
 			sectionPrice.setSeatOccupancySet(seatOccupancySet);
+			sectionPriceDao.save(sectionPrice);
 		}
 	}
 
@@ -101,4 +109,10 @@ public class ScheduleService implements IScheduleService {
 		return seatOccupancyList;
 	}
 
+	@Transactional
+	@Override
+	public void saveSectionPrice(SectionPrice secPrice) {
+		sectionPriceDao.save(secPrice);
+	}
+	
 }

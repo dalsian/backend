@@ -1,7 +1,9 @@
 package edu.mum.cinema.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class TemplateController {
 	@GetMapping("/sectiontemplatebylayoutid/{id}")
 	public ResponseEntity<List<edu.mum.cinema.dto.SectionTemplate>> getsectionTemplateByLayoutId(@PathVariable("id") long id) {
 		LayoutTemplate layoutTemplate = templateService.getLayoutTemplate(id);
-		List<edu.mum.cinema.dto.SectionTemplate> sectionList = new ArrayList<>();
+		Set<edu.mum.cinema.dto.SectionTemplate> sectionList = new HashSet<>();
 		
 		if (layoutTemplate.getSectionTemplateList() != null) {
 			for(SectionTemplate template : layoutTemplate.getSectionTemplateList()) {
@@ -44,7 +46,7 @@ public class TemplateController {
 			}
 		}
 		
-		return ResponseEntity.ok().body(sectionList);
+		return ResponseEntity.ok().body(new ArrayList<>(sectionList));
 	}
 	
 	@GetMapping("/sectiontemplate/{id}")

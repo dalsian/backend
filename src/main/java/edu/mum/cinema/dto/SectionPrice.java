@@ -2,40 +2,51 @@ package edu.mum.cinema.dto;
 
 public class SectionPrice {
     private String id;
-    private String section;
+    private String sectionId;
+    private String sectionName;
     private Double price;
     
     public SectionPrice() {
     	
     }
     
-    public SectionPrice(String sectionName, Double price){
-        this.section = sectionName;
+    public SectionPrice(String sectionId, String sectionName, Double price){
+    	this.sectionId = sectionId;
+        this.sectionName = sectionName;
         this.price = price;
     }
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getSection() {
-        return section;
-    }
+	public String getSectionId() {
+		return sectionId;
+	}
 
-    public void setSection(String section) {
-        this.section = section;
-    }
+	public void setSectionId(String sectionId) {
+		this.sectionId = sectionId;
+	}
 
-    public Double getPrice() {
-        return price;
-    }
+	public String getSectionName() {
+		return sectionName;
+	}
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+	public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
     
 }

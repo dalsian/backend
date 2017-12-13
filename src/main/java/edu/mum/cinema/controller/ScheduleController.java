@@ -1,7 +1,9 @@
 package edu.mum.cinema.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.mum.cinema.model.Schedule;
 import edu.mum.cinema.model.SeatOccupancy;
 import edu.mum.cinema.model.SectionPrice;
+import edu.mum.cinema.model.template.LayoutTemplate;
+import edu.mum.cinema.model.template.SectionTemplate;
 import edu.mum.cinema.service.IMovieService;
 import edu.mum.cinema.service.IScheduleService;
+import edu.mum.cinema.service.template.ITemplateService;
 import edu.mum.cinema.util.BeanUtil;
 
 @RestController
@@ -28,6 +33,9 @@ public class ScheduleController {
 	
 	@Autowired
 	private IMovieService movieService;
+	
+	@Autowired
+	private ITemplateService templateService;
 	
 	@GetMapping("/seatsByScheduleId/{sid}")
 	public ResponseEntity<List<edu.mum.cinema.dto.Seat>> getSeatOccupancyByScheduleId(@PathVariable("sid") long sid) {
@@ -40,7 +48,27 @@ public class ScheduleController {
 	
 	@PostMapping("/schedule")
 	public ResponseEntity<?> save(@RequestBody edu.mum.cinema.dto.Schedule scheduleDto) {
-		long id = scheduleService.save(BeanUtil.toSchedule(scheduleDto));
+		Schedule schedule = BeanUtil.toSchedule(scheduleDto);
+		LayoutTemplate layout = templateService.getLayoutTemplate(Long.parseLong(scheduleDto.getTemplateId()));
+		schedule.setLayoutTemplate(layout);
+		Set<SectionPrice> sps = new HashSet<>();
+		
+		long id = scheduleService.save(schedule);
+		
+		for(edu.mum.cinema.dto.SectionPrice spDto : scheduleDto.getSectionPrices()) {
+			SectionPrice sp = BeanUtil.toSectionPrice(spDto);
+			sp.setSchedule(schedule);//Check ID
+			
+			SectionTemplate secTemp = templateService.getSectionTemplate(Long.parseLong(spDto.getSectionId()));
+			sp.setSectionLabel(secTemp.getSectionLabel());
+			sp.setSectionTemplate(secTemp);
+			scheduleService.saveSectionPrice(sp);
+			sps.add(sp);
+		}
+		schedule.setSectionPriceList(sps);
+		scheduleService.update(schedule.getId(), schedule);
+		scheduleService.createSeatOccupancies(schedule);
+		
 		return ResponseEntity.ok().body("Schedule id " + id + " has been saved.");
 	}
 	

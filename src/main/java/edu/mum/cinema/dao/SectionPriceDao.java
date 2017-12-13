@@ -16,4 +16,10 @@ public class SectionPriceDao implements ISectionPriceDao {
 	public SectionPrice get(Long id) {
 		return sessionFactory.getCurrentSession().get(SectionPrice.class, id);
 	}
+
+	@Override
+	public Long save(SectionPrice sectionPrice) {
+		sessionFactory.getCurrentSession().save(sectionPrice);
+		return sectionPrice.getId();
+	}
 }

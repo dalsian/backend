@@ -108,7 +108,7 @@ public class BeanUtil {
 			schedule.setId(Long.parseLong(scheduleDto.getId()));
 		}
 		schedule.setDatetime(DateUtil.toDate(scheduleDto.getDate()+" "+scheduleDto.getTime()));
-		//schedule.setMovie(scheduleDto.getMovie()); only title
+		schedule.setMovieId(Long.parseLong(scheduleDto.getMovieId()));
 		//layouttemplate
 		//sectionprice
 		
@@ -118,10 +118,20 @@ public class BeanUtil {
 	public static edu.mum.cinema.dto.SectionPrice toSectionPriceDto(SectionPrice sectionPrice) {
 		edu.mum.cinema.dto.SectionPrice spDto = new edu.mum.cinema.dto.SectionPrice();
 		spDto.setId(sectionPrice.getId().toString());
-		spDto.setSection(sectionPrice.getSectionLabel());
+		spDto.setSectionId(sectionPrice.getSectionTemplate().getId().toString());
+		spDto.setSectionName(sectionPrice.getSectionLabel());
 		spDto.setPrice(sectionPrice.getPrice());
 		
 		return spDto;
+	}
+	
+	public static SectionPrice toSectionPrice(edu.mum.cinema.dto.SectionPrice spDto) {
+		SectionPrice sp = new SectionPrice();
+		if(spDto.getId() != null && !spDto.getId().isEmpty()) {
+			sp.setId(Long.parseLong(spDto.getId()));
+		}
+		sp.setPrice(spDto.getPrice());
+		return sp;
 	}
 	
 	public static Movie toMovie(edu.mum.cinema.dto.Movie movieDto) {
