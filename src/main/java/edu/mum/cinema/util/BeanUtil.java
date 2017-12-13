@@ -1,18 +1,24 @@
 package edu.mum.cinema.util;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import edu.mum.cinema.dto.Seat;
 import edu.mum.cinema.model.Movie;
 import edu.mum.cinema.model.Schedule;
 import edu.mum.cinema.model.SeatOccupancy;
 import edu.mum.cinema.model.SectionPrice;
 import edu.mum.cinema.model.User;
 import edu.mum.cinema.model.template.SectionTemplate;
+import edu.mum.cinema.service.IScheduleService;
 
 public class BeanUtil {
+	
+	@Autowired
+	private IScheduleService scheduleService;
 	
 	/**
 	 * For swapping attributes between beans.  i.e entity <-> dto
@@ -158,5 +164,29 @@ public class BeanUtil {
 		templateDto.setLayoutTemplateId(template.getLayoutTemplate().getId().toString());
 	
 		return templateDto;
+	}
+	
+	public static Seat toSeatDto(SeatOccupancy seatOccupancy) {
+		Seat seat = new Seat();
+		seat.setId(seatOccupancy.getId().toString());
+		seat.setColumnNum(Integer.toString(seatOccupancy.getSeatTemplate().getPosY())); 
+		seat.setRowNum(seatOccupancy.getSeatTemplate().getSeatLabel());
+		seat.setStatus(seatOccupancy.getStatus());
+		return seat;
+	}
+	
+	/**
+	 * Don't have enough info from front end.  
+	 * Need to retrieve from DB.
+	 */
+	@Deprecated
+	public static SeatOccupancy toSeatOccupancy(Seat seat) {
+		SeatOccupancy seatOccupancy = new SeatOccupancy();
+		if (seat.getId() != null && !seat.getId().isEmpty()) {
+			seatOccupancy.setId(Long.parseLong(seat.getId()));
+		}
+		seatOccupancy.setStatus(seat.getStatus());
+		
+		return seatOccupancy;
 	}
 }

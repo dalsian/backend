@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import edu.mum.cinema.dto.OrderReqDto;
+import edu.mum.cinema.dto.Seat;
 import edu.mum.cinema.dto.ToggleSeatReqDto;
 import edu.mum.cinema.model.SeatOccupancy;
 import edu.mum.cinema.model.Ticket;
@@ -129,9 +130,9 @@ public class WebServiceConnector {
 		callWebService(HTTP_METHOD.PUT, "releaseSeatByUserId/" + userId, null, String.class);
 	}
 	
-	public List<Ticket> orderTickets(List<SeatOccupancy> seatOccupancies, Long userId) {
+	public List<Ticket> orderTickets(List<Seat> seatList, Long userId) {
 		
-		OrderReqDto reqDto = new OrderReqDto(userId, seatOccupancies);
+		OrderReqDto reqDto = new OrderReqDto(userId.toString(), seatList);
 		Ticket[] ticketList = callWebService(HTTP_METHOD.POST, "orderTickets/", reqDto, Ticket[].class);
 		
 		return Arrays.asList(ticketList);
@@ -171,11 +172,17 @@ public class WebServiceConnector {
 		}
 		
 		//---------------- Test booking ----------------------
-		List<SeatOccupancy> seatOccupancies = new ArrayList<>();
-		seatOccupancies.add(connector.getSeatOccupancy(2L));
-		seatOccupancies.add(connector.getSeatOccupancy(3L));
-		seatOccupancies.add(connector.getSeatOccupancy(4L));
-		List<Ticket> ticketList = connector.orderTickets(seatOccupancies, 1L);
+		List<Seat> seats = new ArrayList<>();
+		Seat s = new Seat();
+		s.setId("1");
+		seats.add(s);
+		s = new Seat();
+		s.setId("2");
+		seats.add(s);
+		s = new Seat();
+		s.setId("3");
+		seats.add(s);
+		List<Ticket> ticketList = connector.orderTickets(seats, 1L);
 		for(Ticket ticket : ticketList) {
 			System.out.println(ticket.getSeatLabel() + " : $" + ticket.getPrice());
 		}

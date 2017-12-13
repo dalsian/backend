@@ -121,8 +121,8 @@ public class BookingService implements IBookingService {
 		
 		for(SeatOccupancy seatOccupancy : seatOccupancies) {
 			
-			if(seatOccupancy.getStatus().equals(SeatOccupancy.STATUS_SELECTED) && 
-											seatOccupancy.getLockedBy().equals(userId)) {
+//			if(seatOccupancy.getStatus().equals(SeatOccupancy.STATUS_SELECTED) && 
+//											seatOccupancy.getLockedBy().equals(userId)) {
 				
 				//Mark as sold.
 				seatOccupancy.setStatus(SeatOccupancy.STATUS_SOLD);
@@ -140,11 +140,7 @@ public class BookingService implements IBookingService {
 				ticket.setId(ticketDao.save(ticket));
 		
 				ticketList.add(ticket);
-				
-				
-			} else {
-				//Shouldn't happen.
-			}
+//			} 
 			
 			
 		}

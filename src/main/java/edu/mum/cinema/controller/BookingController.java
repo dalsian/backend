@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.mum.cinema.dto.OrderReqDto;
+import edu.mum.cinema.dto.Seat;
 import edu.mum.cinema.dto.ToggleSeatReqDto;
 import edu.mum.cinema.model.Schedule;
 import edu.mum.cinema.model.SeatOccupancy;
 import edu.mum.cinema.model.Ticket;
 import edu.mum.cinema.service.IBookingService;
+import edu.mum.cinema.service.IScheduleService;
 
 @RestController
 public class BookingController {
@@ -51,11 +53,18 @@ public class BookingController {
 	}
 	
 	@PostMapping("/orderTickets")
-	public ResponseEntity<List<Ticket>> save(@RequestBody OrderReqDto reqDto) {
+	public ResponseEntity<String> save(@RequestBody OrderReqDto reqDto) {
 		
-		List<Ticket> ticketList = bookingService.orderTickets(reqDto.getSeatOccupancyList(), reqDto.getUserId());
+		List<SeatOccupancy> seatOccupancies = new ArrayList<>();
+		for (Seat seat : reqDto.getSeatList()) {
+			SeatOccupancy seatOccupancy = bookingService.getSeatOccupancy(Long.parseLong(seat.getId()));
+			if(seatOccupancy != null) {
+				seatOccupancies.add(seatOccupancy);
+			}
+		}
 		
-		return ResponseEntity.ok().body(ticketList);
+		bookingService.orderTickets(seatOccupancies, Long.parseLong(reqDto.getUserId()));
+		
+		return ResponseEntity.ok().body("Seat selection successful.");
 	}
-	
 }

@@ -6,32 +6,31 @@ import edu.mum.cinema.model.SeatOccupancy;
 
 public class OrderReqDto {
 
-	private Long userId;
-	private List<SeatOccupancy> seatOccupancyList;
+	private String userId;
+	private List<Seat> seatList;
 	
 	public OrderReqDto() {
-		
 	}
 	
-	public OrderReqDto(Long userId, List<SeatOccupancy> seatOccupancyList) {
+	public OrderReqDto(String userId, List<Seat> seatList) {
 		super();
 		this.userId = userId;
-		this.seatOccupancyList = seatOccupancyList;
+		this.seatList = seatList;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public List<SeatOccupancy> getSeatOccupancyList() {
-		return seatOccupancyList;
+	public List<Seat> getSeatList() {
+		return seatList;
 	}
 
-	public void setSeatOccupancyList(List<SeatOccupancy> seatOccupancyList) {
-		this.seatOccupancyList = seatOccupancyList;
+	public void setSeatList(List<Seat> seatList) {
+		this.seatList = seatList;
 	}
 }
