@@ -37,6 +37,7 @@ public class MovieDao implements IMovieDao {
 		existing.setGenre(t.getGenre());
 		existing.setDescription(t.getDescription());
 		existing.setLength(t.getLength());
+		existing.setImageurl(t.getImageurl());
 		session.update(existing);
 	}
 
