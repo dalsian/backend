@@ -52,7 +52,7 @@ public class UserController {
 	@PostMapping("/changePassword")
 	public ResponseEntity<edu.mum.cinema.dto.User> changePassword(@RequestBody String body) {
 		Map<String, String> paramMap = StringUtil.paramsToMap(body);
-		User user = userService.changePassword(Long.parseLong(paramMap.get("id")), paramMap.get("password"), paramMap.get("newpassword"));
+		User user = userService.changePassword(Long.parseLong(paramMap.get("id")), paramMap.get("password"));
 		if (user == null) {
 			return ResponseEntity.ok().body(null);
 		}

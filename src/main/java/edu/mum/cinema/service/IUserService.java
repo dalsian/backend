@@ -11,5 +11,5 @@ public interface IUserService {
 	void update(long id, User user);
 	void delete(long id);
 	User authenticate(String userName, String password);
-	User changePassword(Long id, String oldPass, String newPass);
+	User changePassword(Long id, String pass);
 }

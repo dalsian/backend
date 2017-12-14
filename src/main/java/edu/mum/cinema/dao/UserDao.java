@@ -55,6 +55,7 @@ public class UserDao implements IUserDao {
 		userOld.setLastName(user.getLastName());
 		userOld.setDob(user.getDob());
 		userOld.setPhone(user.getPhone());
+		userOld.setUserId(user.getUserId());
 		session.update(userOld);
 	}
 

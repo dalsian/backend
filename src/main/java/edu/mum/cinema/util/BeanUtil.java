@@ -66,7 +66,7 @@ public class BeanUtil {
 	public static User toUser(edu.mum.cinema.dto.User userDto) {
 		
 		User user = new User();
-		if(userDto.getId() != null) {
+		if(userDto.getId() != null && !userDto.getId().isEmpty()) {
 			user.setId(Long.parseLong(userDto.getId()));
 		}
 		user.setFirstName(userDto.getFirstName());
