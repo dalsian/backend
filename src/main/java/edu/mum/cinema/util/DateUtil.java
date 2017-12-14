@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class DateUtil {
 	
-	private static SimpleDateFormat fullDate = new SimpleDateFormat("MM-dd-yyyy HH:mm");//EEE MMM dd yyyy HH:mm:ss
+	private static SimpleDateFormat fullDate = new SimpleDateFormat("MMM-dd-yyyy HH:mm");//EEE MMM dd yyyy HH:mm:ss
 
 	public static String getDate(Date date) {
 		Calendar calendar = Calendar.getInstance();

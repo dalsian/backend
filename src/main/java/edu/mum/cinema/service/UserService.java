@@ -50,4 +50,16 @@ public class UserService implements IUserService {
 		return userDao.authenticate(userName, password);
 	}
 
+	@Override
+	public User changePassword(Long id, String oldPass, String newPass) {
+		User user = userDao.get(id);
+		if (user.getPassword().equals(oldPass)) {
+			user.setPassword(newPass);
+			userDao.update(id, user);
+		} else {
+			return null;
+		}
+		return user;
+	}
+
 }

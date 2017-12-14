@@ -49,6 +49,18 @@ public class UserController {
 		return ResponseEntity.ok().body(userDto);
 	}
 	
+	@PostMapping("/changePassword")
+	public ResponseEntity<edu.mum.cinema.dto.User> changePassword(@RequestBody String body) {
+		Map<String, String> paramMap = StringUtil.paramsToMap(body);
+		User user = userService.changePassword(Long.parseLong(paramMap.get("id")), paramMap.get("password"), paramMap.get("newpassword"));
+		if (user == null) {
+			return ResponseEntity.ok().body(null);
+		}
+		edu.mum.cinema.dto.User userDto = BeanUtil.toUserDto(user);
+		
+		return ResponseEntity.ok().body(userDto);
+	}
+	
 	@GetMapping("/user")
 	public ResponseEntity<List<edu.mum.cinema.dto.User>> getAll() {
 		
